@@ -103,8 +103,7 @@
   background: transparent;
 }
 
-.river-text-left,
-.river-text-right {
+.river-text {
   font-size: 10px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.9);
@@ -112,6 +111,8 @@
   letter-spacing: 2px;
   animation: riverGlow 3s ease-in-out infinite;
   white-space: nowrap;
+  position: absolute;
+  z-index: 1;
 }
 
 @keyframes riverGlow {

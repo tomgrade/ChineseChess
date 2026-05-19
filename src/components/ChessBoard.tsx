@@ -64,17 +64,36 @@ export const ChessBoard = ({ board, selectedPiece, validMoves, lastMove, onCellC
           <div key={rowIndex} className={`board-row ${rowIndex === 4 ? 'river-row' : ''}`}>
             {row.map((_, colIndex) => {
               if (rowIndex === 4) {
+                const piece = board[rowIndex][colIndex];
+                const isValid = isValidMove(rowIndex, colIndex);
+                const selected = isSelected(rowIndex, colIndex);
+                const isFrom = isLastMoveFrom(rowIndex, colIndex);
+                const isTo = isLastMoveTo(rowIndex, colIndex);
+                
                 return (
                   <div
                     key={`${rowIndex}-${colIndex}`}
-                    className="river-cell"
+                    className={`cell river-cell ${isValid ? 'valid-move' : ''} ${isFrom ? 'last-move-from' : ''} ${isTo ? 'last-move-to' : ''}`}
                     onClick={() => onCellClick(rowIndex, colIndex)}
                   >
-                    {colIndex === 2 && (
-                      <div className="river-text-left">楚河</div>
+                    {colIndex === 2 && !piece && (
+                      <div className="river-text">楚河</div>
                     )}
-                    {colIndex === 6 && (
-                      <div className="river-text-right">汉界</div>
+                    {colIndex === 6 && !piece && (
+                      <div className="river-text">汉界</div>
+                    )}
+                    {piece && (
+                      <GamePiece
+                        piece={piece}
+                        isSelected={selected}
+                        onClick={() => onCellClick(rowIndex, colIndex)}
+                      />
+                    )}
+                    {isValid && !piece && (
+                      <div className="move-indicator"></div>
+                    )}
+                    {isFrom && !piece && (
+                      <div className="last-move-indicator from"></div>
                     )}
                   </div>
                 );
